@@ -1,0 +1,147 @@
+﻿Model的方法:
+Model数据模型类,实现了数据库操作的封装.
+链接
+执行添加
+data()
+add()
+修改
+data()
+where()
+save()
+删除
+where()
+delete()
+查询
+select()
+find()
+count()
+
+where()
+join()
+group()
+having()
+order()
+limit("$start,$length")
+alias()
+table()
+field()
+
+数据模型类封装
+1\放在Model
+2\XxxModel.class.php 类名和类文件名一样.
+3\继承Model
+4\使用命名空间.
+5\方法名没有要求.
+特点:
+模板找和类同名的那个表
+如果表名和类名不同名,使用属性
+tableName="a"   cms_a
+trueTableName="a" a
+例子:封装文章分类数据模型类
+1\Admin\Model\TypeModel.class.php
+2\Admin\Controller\NewsController
+	showTypeOption()
+3\Admin\View\add.html update.html
+
+自动验证:对表单提供数据进行验证.
+指定验证规则:
+protected $_validate=array(
+	array(验证字段1,验证规则,错误提示,[验证条件,附加规则,验证时间]), 
+);
+附加规则:
+regex  正则验证，定义的验证规则是一个正则表达式（默认）  
+
+confirm  验证表单中的两个字段是否相同，定义的验证规则是一个字段名  
+
+in  验证是否在某个范围内，定义的验证规则可以是一个数组或者逗号分割的字符串  
+
+length  验证长度，定义的验证规则可以是一个数字（表示固定长度）或者数字范围（例如3,12 表示长度从3到12的范围）  
+between  验证范围，定义的验证规则表示范围，可以使用字符串或者数组，例如1,31或者array(1,31)  
+ 
+unique  验证是否唯一，系统会根据字段目前的值查询数据库来判断是否存在相同的值，当表单数据中包含主键字段时unique不可用于判断主键字段本身  
+
+验证条件:
+self::EXISTS_VALIDATE 或者0 存在字段就验证（默认） 
+self::MUST_VALIDATE 或者1 必须验证 
+self::VALUE_VALIDATE或者2 值不为空的时候验证 
+验证时间:
+self::MODEL_INSERT或者1新增数据时候验证 
+self::MODEL_UPDATE或者2编辑数据时候验证 
+self::MODEL_BOTH或者3全部情况下验证（默认） 
+
+
+产生数据必须用create()
+一次create(),验证所有:
+protected $patchValidate = true;
+geError()返回是数组
+
+获取错误信息 getError()
+
+自动完成:给某些字段加默认值.
+ array(完成字段1,完成规则,[完成条件,附加规则]), 
+
+例子:实现会员注册
+数据库表:
+create table user(
+	id int key auto_increment,
+	username varchar(20) unique,
+	password varchar(32),
+	email varchar(50),
+	nick varchar(10),
+	sex tinyint(1),
+	addr varchar(100),
+	phone varchar(11),
+	addtime int
+);
+呈现会员注册的表单页面:
+UserController
+	|
+	register
+	|
+----------------
+		V
+
+
+M('News')//实例化Model类
+D('News')//实例化NewsModel,如果数据模型类不存在,实例化Model
+
+公共类:
+
+分页类 Library/Think/Page.class.php
+1\实例化
+$num=$ob->where(条件)->count()总记录数
+$pagesize=10;
+$page=new Page(总记录数,每页显示条数);
+2\从表中读对应的数据 limit("$start,$pagesize")
+$start=$page->firstRow;
+
+3\获取分页的结果
+$pageStr=$page->show();
+
+$num;
+
+num
+current
+prev
+next
+
+
+
+
+图片上传类
+缩略图类
+验证码类
+
+
+
+
+
+
+
+
+
+
+
+
+
+

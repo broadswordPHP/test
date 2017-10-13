@@ -1,0 +1,192 @@
+﻿THINK模板标签:
+变量标签
+{$名称}
+配置文件修改标签的定界符:
+'TMPL_L_DELIM'=>'{',  // 模板引擎普通标签开始标记
+'TMPL_R_DELIM'=>'}',  // 模板引擎普通标签结束标记
+数组变量标签
+{$名称.下标|['下标']}
+循环遍历数组标签
+<foreach name='数组名' key='k' item="v">
+{$v.下标}
+</foreach>
+条件标签
+<if condition="条件">
+</if>
+<if condition="条件">
+<else/>
+</if>
+<if condition="条件">
+<elseif condition="条件"/>
+<elseif condition="条件"/>
+....
+<else/>
+</if>
+
+eq 等于
+gt 大于
+lt 小于
+elt 小于等于
+egt 大于等于
+neq 不等于
+heq 恒等于
+
+例子:判断一个人的性别 1 女 2 男 3 保密
+
+变量调节器
+{被调节变量|函数名=参数1,###,参数3}
+###代表被调节的变量出现的位置
+
+加载公共模板标签
+<include file="模板path"/>
+控制器名/方法名
+控制器名:方法名
+
+Public/header ---- Home/View/Public/header.html
+
+常量调用标签
+$Think.const.名称
+
+预定义变量调用标签
+$Think.get.名称
+$Think.post.名称
+$Think.cookie.名称
+$Think.session.名称
+......
+url地址获取标签
+
+http://localhost/psd1705/14_ThinkPHP/index.php/Home/News/detail/s/2
+
+所有
+域名
+入口文件
+模块
+控制器
+方法
+
+__APP__
+__MODULE__
+__URL__
+__ACTION__
+__PUBLIC__
+__SELF__   获取当前页面的所有URL地址
+
+M层:
+连接数据库
+'DB_TYPE'               =>  '',     // 数据库类型
+'DB_HOST'               =>  '', // 服务器地址
+'DB_NAME'               =>  '',          // 数据库名
+'DB_USER'               =>  '',      // 用户名
+'DB_PWD'                =>  '',          // 密码
+'DB_PREFIX'             =>  '',    // 数据库表前缀
+
+测试连接是否成功:
+$ob=new \Think\Model('表名');
+$ob=M('表名');//实例化Model
+select() 多条查询
+
+学习Model的方法:
+有一类sql语句就有一个方法
+add(array)
+delete()
+save(array)
+select()
+find()
+count()
+
+data()
+create()
+
+where("条件")
+field("*")
+alias('t1')
+join("表2 t2 on t1.字段=t2.字段")
+group('字段')
+having('条件')
+limit('start,length')
+order('字段 asc|desc')
+
+
+例子:
+1\获取分类数据,显示在导航上.
+$type=M("ntype");
+$type->select();
+2\呈现文章列表,显示文章对应的分类名称.
+select n.id,n.title,t.tname from news as n join ntype as t on n.type=t.id
+3\获取每个分类下文章条数.
+select type,count(*) as num from news group by type;
+4\请查询出,文章条数大于8的文章分类
+select count(*) as num,t.tname from news n join ntype t on n.type=t.id group by n.type having num>8
+5\文章列表每页显示5条最新.
+6\根据id,获取对应的文章记录
+select * from news where id=$id
+7\后台的文章添加
+8\文章删除
+9\文章的修改
+		列表页点击修改链接
+			|id=49
+			index.php
+			|id=49
+			Admin/NewsController---Update方法
+						|
+		-------------------------------------
+	        M 根据id获取文章记录	            V修改表单
+							|
+						     提交按钮
+			           NewsController/usave|id=49
+						|
+					-------------------
+					M根据id,修改文章
+10\分类添加
+
+
+		
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

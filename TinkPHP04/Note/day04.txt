@@ -1,0 +1,131 @@
+﻿图片上传类
+Upload.class.php
+实例化:
+$upload=new \Think\Upload();
+//设置
+指定存放的目录
+$upload->autoSub=false;
+$upload->rootPath="./Public/";
+$upload->savePath="Upload/";
+指定大小
+$upload->maxSize=2000000;
+指定类型
+$upload->mimes=array('image/png','image/jpeg','image/gif');
+保存图片
+$upload->upload();
+
+
+缩略图类
+缩略图的意义:等比例缩放
+$image=new \Think\Image();
+$image->open("path");
+$image->thumb("width","height");
+$image->save("path");
+
+水印:
+打开
+$image->open();
+水印
+$image->water("水印图片路径");
+保存
+$image->save('path');
+
+验证码类
+$verify=new \Think\Verify();
+$verify->check()
+$verify->entry()
+例子:
+显示验证码,在登录表单
+Home/Controller/VerifyController.class.php
+	show()----Verify->entry()
+缓存:
+文件缓存
+S()
+F()
+Model->cache(true|cache_name,时间)
+
+总结优点:
+实现低耦合性
+规定了目录结构,M,C,V编写
+文件名规定好
+便于维护
+缩短工期,进度快.
+
+缺点:
+效率低
+不易于理解
+
+产品添加(多图片) 管理 修改(多图片)
+设计表(要存什么东西,这个东西有什么属性,受系统要展现的内容):
+
+create table product(
+	id int key auto_increment,
+	title varchar(100),
+	content text,
+	price varchar(20)
+);
+create table productimage(
+	id int key auto_increment,
+	image varchar(50),
+	productid int
+);
+
+	
+后台
+	添加 修改  删除(逻辑删除)
+
+	点击添加链接
+	|
+	Admin/ProductController/add
+				|
+			-----------------
+					v
+					|
+					提交
+					|
+			Admin/ProductController/save
+						|
+					-------------------
+					M
+
+带图片的产品列表:
+为每个产品找一个图片
+select p.*,i.image from product as p join productimage as i on p.id=i.productid; 不可取
+有一个产品id,找一个图片
+
+删除图片:ajax
+$.ajax({
+	url:'__URL__/delimage',
+	data:'imagename=mingcheng&imageid=1',
+	success:function(re){
+		//删除节点
+		
+	}
+})
+删图片
+删记录
+删节点
+
+
+	
+
+
+
+YII框架
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
